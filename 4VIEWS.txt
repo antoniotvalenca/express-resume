@@ -1,0 +1,54 @@
+CONTEXTUALIZAÇÃO
+
+-> Quando estamos desenvolvendo aplicações web, é comum que queiramos exibir determinados dados obtidos de modo renderizado no navegador, isto é, utilizando páginas HTML.
+-> A criação de páginas HTML, porém, muitas vezes, se torna improdutiva/ineficiente, principalmente quando precisamos trabalhar com uma grande quantidade de dados
+    -> inclusive quando precisamos utilizar recursos da linguagem de programação (como condicionais, for, if, etc) nas páginas HTML
+-> Suprindo a necessidade de maior organização destes casos, podem ser utilizadas as chamadas VIEW ENGINES
+
+_______________________________________________________________________________________
+
+O QUE SÃO VIEW ENGINES
+
+-> São template engines que facilitam a criação de páginas HTML, tornando o envio e exibição de informações dinâmicas (isto é, que vem de fontes como API, bancos de dados, etc) em um processo muito mais simples e organizado
+-> Sem uma VIEW ENGINE:
+    -> HTML simplesmente serve para marcação de texto
+-> Com uma VIEW ENGINE:
+    -> HTML se transforma em um ambiente mais complexo, podendo receber inclusive funções, variáveis, condições, estrutura de repetição, etc
+
+_______________________________________________________________________________________
+
+VISUALIZAÇÃO GRÁFICA
+
+                        [DADOS]                           [VIEW]
+                       [*dados*]                           [</>]
+                           |                                 |
+                           |__________[VIEW ENGINE]__________|
+                                            |
+                                            |
+                                            |
+                                    PÁGINA DE RESULTADO
+
+_______________________________________________________________________________________
+
+COMO FUNCIONA UMA VIEW ENGINE
+
+-> O navegador só consegue "ler" informações HTML e renderizá-las
+-> Por isso, a view engine "traduz" o conteúdo do view para o código HTML puro e os envia para o navegador
+-> Existem várias View Engines, mas a mais utilizada no ambiente do Javascript é o "EJS"
+
+_______________________________________________________________________________________
+
+PRÁTICA
+
+1) Instalar o EJS (que é o view engine utilizado)
+    -> npm i ejs
+2) Criar a pasta "views" e colocar dentro da pasta "src" (onde terá, dentre outras coisas, uma pasta de routes)
+3) Ir no server.js e avisar ao express o caminho para o "views" e qual "view engine" estaremos usando:
+    -> app.set("views", path.resolve(__dirname, 'src', 'views'))
+    -> app.set("view engine", "ejs")
+4) Ir na pasta views e criar um arquivo index.ejs (em outro contexto, seria um index.html da vida)
+    -> Quase a mesma coisa que o html
+
+
+5) Agora que temos um arquivo "html" (entre aspas, já que é um arquivo .ejs), não precisamos, dentro do express().get usar o "res.send"
+    -> No lugar deste, usaremos res.render('index')

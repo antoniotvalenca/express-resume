@@ -1,0 +1,6 @@
+-> Conteúdos estáticos são conteúdos que não mudam (ao menos não dinamicamente)
+    -> pasta de Assets (css, imagens, javascript)
+-> Eles são tratadas dentro de uma pasta chamada "public" (que fica no mesmo nível da pasta "src", que guarda os conteúdos de view e routes)
+-> Dentro do server.js:
+    -> app.use(express.static(path.resolve(__dirname, 'public'))) // ou simplesmente ./public
+    -> app.set('view engine', 'ejs') 

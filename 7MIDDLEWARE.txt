@@ -1,0 +1,41 @@
+EXPLICAÇÃO
+
+-> Middleware são "softwares" que são executados durante o ciclo request-response (no meio do ciclo).
+        -> ficam no intermédio, "observando" o comportamento da requisição
+-> Eles podem ser bem sucedidos, isto é, passam a requisição/resposta para o próximo passo (que normalmente já ocorreria), ou podem ser mal sucedidos, quebrando a requisição HTTP.
+-> Eles conseguem manipular essas requisiçoes/respostas antes de chegar no ponto de destino
+
+-> Podemos criar nossos próprios middlewares (no formato de funções mesmo) e associá-los ao ciclo req-res de um route específico ou de todas as vezes que ocorrer esse req-res (todos os routes)
+-> Os seus parâmetros são req, res e next. O next é essencial para indicar a passagem para o próximo passo.\
+    -> (req, res, next) => {console.log("texte");   next();}
+    -> Sem o next, a página fica carregando infinitamente pois fica presa na parte de receber uma resposta, já que nunca seria passada para o próximo passo
+
+_______________________________________________________________________________________
+
+CRIANDO UM MIDDLEWARE
+-> Normalmente temos uma pasta própria de middlewares, que fica no mesmo nível da pasta de controllers
+-> Importamos para o server
+
+*dentro da pasta de middleware*
+-> middleware = (req, res, next) => {
+    console.log("Isto é um middleware")
+    next()
+};
+
+_______________________________________________________________________________________
+
+APLICANDO UM MIDDLEWARE
+
+-> Maneira 1: Quando queremos em uma única rota
+    -> neste caso temos que importar para sua pasta do Controller e não no server.js
+-> app.get('/index', middleware, (req, res) => {res.send("página index")})
+
+-> Maneira 2: Quando iremos usar globalmente em todas as requests
+-> app.use(middleware)
+
+_______________________________________________________________________________________
+
+REPRESENTAÇÃO GRÁFICA
+
+               middlewares
+[ REQUEST ]=>  (APLICAÇÃO)  [RESPONSE]=>

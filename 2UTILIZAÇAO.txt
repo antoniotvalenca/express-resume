@@ -1,0 +1,98 @@
+BÁSICO:
+
+    -> criamos uma constante para o require('express') e outra que guarda a funçao express();
+    -> depois usamos o .get() para armazenar informaçoes para a constante que guarda o express();
+    -> e, por fim usamos o .listen() para enviar tudo do get para a porta em que se é direcionado o listen;
+
+    ex1:
+                const express = require('express');
+                const app = express();
+
+                app.get("/", (req, res) => {
+                    res.send("Seja bem-vindo ao meu app");
+                })
+
+                app.listen(8081, () => {console.log("servidor rodando na url http://localhost:8081)})
+
+    ex2:        const express = require('express');
+                const app = express();
+
+                app.get("/", (req, res) => {
+                    res.send("Seja bem-vindo ao index do projeto");
+                });
+
+                app.get("/sobre". (req, res) => {
+                    res.send("Veja as informaçoes *sobre* este projeto: feiojfieorfjeoir");
+                });
+
+                app.listen(8081, () => {
+                    console.log("servidor rodando na url http://localhost:8081" ou http://localhost:8081/sobre")
+                })
+
+_______________________________________________________________________________________
+
+
+PARÂMETROS DE UMA ROTA:
+
+    -> podemos colocar, na rota http, parametros (são rotas que não possuem nomes fixos, isto é, depende do próprio cliente colocá-los. estes parametros também podem ser relevantes pois, no contexto do servidor, servem para guardar informações sobre o proprio cliente)
+    -> os parametros sao sempre declarados com dois pontos (/sobre/:nome/:idade)
+    -> caso coloquemos uma "?" depois do nome do parametro, ele nao se torna mais obrigatorio, so opcional (/sobre/:nome?)
+    -> para acessar esses parametros, usamos req.params ou, caso seja um parametro especifico, req.parames.nomeDoParametro
+    -> ex:
+
+                const express = require('express');
+                const app = express();
+
+                app.get("/index/:nome/:idade", (req, res) => {
+                    res.send(`Seja bem-vindo(a), ${req.params.nome}!`);
+                });
+
+                app.listen(8081, () => {console.log("servidor rodando na url http://localhost:8081)})
+
+_______________________________________________________________________________________
+
+TRABALHANDO COM FORMULÁRIOS:
+
+    -> ao trabalharmos com formulários/posts, além de usarmos o .get("rota") para mandar infos para tal rota, também usamos o .post("rota") com a mesma rota do get
+    -> para recebermos essa informação do formulário, logo no início do codigo, digitamos:
+        -> app.use(express.urlencoded({extended: true}))
+    -> dentro do .get, digitamos:
+        -> res.send(`<form action="/" method="POST"> Digite seu nome: <input type="text" name="nome"><button>Enviar</button></form>`);
+        -> isso no caso é o html de um formulário
+    -> para acessarmos o que foi enviado no formulário, usamos, dentro do post:
+        -> req.body.nome (esse terceiro parametro se refere ao valor do "name" que ta no html do formulário)
+    -> ex:
+
+                const express = require('express')
+                const app = express();
+
+                app.use(express.urlencoded({extended: true}))
+
+                app.get("/", (req, res) => {
+                    res.send(`<form action="/" method="POST"> Digite seu nome: <input type="text" name="nome"><button>Enviar</button></form>`)
+                })
+
+                app.post("/", (req, res) => {
+                    res.send(`O que você enviou foi: ${req.body.nome}`)
+                })
+
+                app.listen(5050)
+
+
+_______________________________________________________________________________________
+
+RESUMO:
+
+const express = require('express');
+const app = express();
+
+app.use(express.urlencoded({extended: true})) => usado no inicio do codigo quando o codigo vai tratar do valor de um formulario
+
+app.get("rota", (req, res) => { *codigo* }) => na rota, normalmente colocamos o parametro "/" e o req res diz respeito a request e response
+    ->  res.send('mensagem') => é o que estará dentro do html da requisiçao (podemos estruturar/renderizar com elementos do proprio html tipo tags etc)
+
+app.post("rota", (req, res) => {res.send("formulario recebido")}) => tem a mesma estrutura de um get mas com um proposito completamente diferente: em paginas em que exige envio de formulario ou posting, usamos o app.post para indicar o envio/post
+
+req.body.nomeDoFormulario => usamos dentro do .post() e este código contém o que foi enviado no formulário
+
+app.listen(0000, () => { console.log("servidor rodando na url http://localhost:0000") } => abre o servidor na porta de número 'x' (essa linha de código tem que ser a última)

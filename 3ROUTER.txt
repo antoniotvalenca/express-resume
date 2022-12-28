@@ -1,0 +1,83 @@
+CONTEXTUALIZAÇÃO
+
+No express, quando colocamos muitas rotas diferentes em um único arquivo.js, fica difícil aplicar manutenções periódicas, levando em conta a desorganização (e não é uma boa prática deixar arquivos com muitas linhas de código)
+
+Para isto, usamos o Router do express. Nele, associamos um conjunto de páginas a uma rota em comum. Isto é, todas que terão o mesmo "prefixo" devem estar no mesmo arquivo
+
+-> ex: conjunto de rotas do /admin
+    -> /admin (pagina principal do administrador)
+    -> /admin/characteristics (pagina das caracteristicas do administrador)
+    -> /admin/settings (pagina de configuraçoes do administrador )
+    -> /admin/settings/core (pagina das configuraçoes-nucleo do administrador)
+
+_______________________________________________________________________________________
+
+ORGANIZAÇÃO
+
+-> Para a organização geral, criamos uma pasta chamada "controller", onde, iremos criar um arquivo.js para cada grupo de rota:
+    -> *dentro da pasta controller*
+        -> homeController.js
+        -> userController.js
+        -> ...
+
+-> Depois exportamos todos esses "xController.js" para um arquivo chamado "routes.js" (que fica fora da pasta controller)
+    -> HOMECONTROLLER.JS:
+            -> exports.home = (req, res) => {
+                res.send("o que vai ser enviado") // ou res.render('nomeDoArquivo.ejs');
+            }
+    -> ROUTES.JS:
+            -> const homeController = require('./controllers/homeController);
+            -> route.get('/', homeController.home);
+            -> modules.exports = route;
+
+-> Por fim, importamos tudo para o "server.js"
+    -> SERVER.JS:
+            -> const routes = require('./routes.js')
+            -> app.use(routes)
+
+-> Resumo:
+    -> arquivoController.js (DENTRO DA PASTA CONTROLLER) >>> routes.js >>> server.js
+
+_______________________________________________________________________________________
+
+
+CÓDIGO
+
+-> NO (POR EXEMPLO) HOMECONTROLLER.JS (QUE FICA NA PASTA CONTROLLERS)
+
+    exports.home( (req,res) => {
+        res.send("o que é para mandar para o html) // ou res.render("nomedoarquivoEJS")
+    })
+
+    exports.homeHandlePost( (req, res) => {
+        res.send('Postado')
+    })
+
+-> NO ROUTES.JS
+
+    const express = require('express')
+    const route = express.Router()
+    const homeController = require('./controllers/homeController')
+    const contatoController = require('./controllers/contatoController')
+
+    // rotas de home
+
+    route.get('/', homeController.home)
+    route.post('/', homeController.homeHandlePost)
+
+    // rotas de contato (nao foi criado mas so um exemplo)
+
+    route.get('/contato', contatoController.contact)
+
+    module.exports = route;
+
+-> NO SERVER.JS 
+
+    const express = require('express')
+    const app = express()
+    const routes = require('./routes')
+
+    app.use(express.urlencoded({ extended: true}))
+    app.use(routes)
+
+    app.listen(8000)

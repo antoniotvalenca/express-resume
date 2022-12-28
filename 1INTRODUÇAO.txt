@@ -1,0 +1,29 @@
+INTRODUÇÃO
+
+-> O express é um framework/módulo/biblioteca do Node muito utilizado e para uso relacionado a requisiçoes http, uso de portas web etc
+
+______________________________________________________
+
+INSTALAÇÃO NO PROJETO:
+
+1) npm init -y
+2) npm install express --save
+3) npm install nodemon --save-sev (é tipo uma dependencia do express que ajuda a facilitar certos processos (tipo atualizar o codigo no servidor sem ter q ficar indo no terminal e danco ctrl C etc))
+
+-> Um pacote do node será baixado com vários outros pacotes alternativos, relacionados às suas dependências
+
+______________________________________________________
+
+RODANDO E FECHANDO O EXPRESS:
+
+-> Para rodar o código javascript com express:
+    -> Escrever o código
+    -> Ir no terminal (do próprio vs code) e digitar "node nomeDoArquivo.js"
+    -> Podemos também ir no próprio terminal do computador, dar um "cd caminho/até/o/arquivo/nomeDoArquivo.js"
+    (só dar um pwd no terminal do vs code) e depois dar um "node nomeDoArquivo.js"
+
+-> Toda vez que paramos de utilizar aquele servidor ou queremos atualizar algo que mudamos no código, temos que fechar o express:
+    -> Digitar CTRL C
+
+-> Caso tenhamos instalado o nodemon, para trabalhar em cima do servidor sem ter que ficar danto CTRL C no terminal, apenas digitamos:
+    -> npx nodemon nomeDoArquivo.js (ele vai ficar vigiando o script toda vez que ele é salvo (como se fosse um live server) então não precisa se preocupar em ficar fechando e re-chamando o express)
